@@ -1,0 +1,24 @@
+.login-card{
+    width: 26rem;
+    background-color: #fff;
+}
+.logo-text{
+    font-size: 5rem;
+    font-weight: bold;
+}
+.login-intro{
+    font-size: 1.5rem;
+    width: 40rem;
+}
+
+
+.register-card{
+    width: 30rem;
+    background-color: #fff;
+}
+#user-email{
+    left: 20rem;
+}
+#user-dob{
+    left: 20rem;
+}
