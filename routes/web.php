@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostsController;
+use App\Http\Controllers\PagesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,9 +18,10 @@ Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/', [PagesController::class, 'index']);
+
+Route::resource('/post', PostsController::class);
 
 Auth::routes(['verify' => true]);
 
