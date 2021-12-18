@@ -85,25 +85,25 @@
                             <label for="name" class="col-md-6 col-form-label text-md-right">{{ __('Select Gender') }}</label>
 
                                <div class="col-md-6">
-                               <div class="flex align-items-center justify-content-around">
-                                   <div>
-                                   <label for="" class="form-check-label">Male</label>
-                                    <!-- <input id="gender" type="radio" class="form-control name="gender" value="{{ old('gender') }}" required autocomplete="gender" autofocus> -->
-                                    <input type="radio" name="gender" id="gender" class="form-check-input">
-                                   </div>
-                                   <div>
-                                   <label for="" class="form-check-label">Female</label>
-                                    <!-- <input id="gender" type="radio" class="form-control name="gender" value="{{ old('gender') }}" required autocomplete="gender" autofocus> -->
-                                    <input type="radio" name="gender" id="gender" class="form-check-input">
-                                   </div>
-                                
-                                    @error('first_name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                    <div class="flex align-items-center justify-content-around">
+                                        <div>
+                                            <label for="" class="form-check-label">Male</label>
+                                                <!-- <input id="gender" type="radio" class="form-control name="gender" value="{{ old('gender') }}" required autocomplete="gender" autofocus> -->
+                                                <input type="radio" name="gender" id="gender" class="form-check-input">
+                                            </div>
+                                            <div>
+                                            <label for="" class="form-check-label">Female</label>
+                                                <!-- <input id="gender" type="radio" class="form-control name="gender" value="{{ old('gender') }}" required autocomplete="gender" autofocus> -->
+                                                <input type="radio" name="gender" id="gender" class="form-check-input">
+                                        </div>
+                                        
+                                            @error('first_name')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
                                 </div>
-                               </div>
                             </div>
                         </div>
                         <!-- password -->

@@ -21,6 +21,20 @@
             Create Post
           </a>
         </div>
+
+
+        @foreach($users as $user)
+        <div>
+          <a href="{{ url('/user', $user->id) }}"  class="btn btn-primary">
+            View User
+          </a>
+        </div>
+        @endforeach
+
+        {{-- <a href="{{ url('/user', $user->id) }}"  class="btn btn-primary">
+          View User
+        </a> --}}
+
         
       @endif
         
