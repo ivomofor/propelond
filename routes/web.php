@@ -29,10 +29,6 @@ Route::resource('/user', UserController::class);
 
 Auth::routes(['verify' => true]);
 
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-// Route::get('/user-profile', [App\Http\Controllers\UserProfileController::class, 'userProfile'])->name('user-profile');
-// Route::get('/edit-user-profile/{user}', [App\Http\Controllers\UserProfileController::class, 'editUserProfile'])->name('edit-user-profile');
-// Route::post('/update-user-profile/{user}', [App\Http\Controllers\UserProfileController::class, 'updateUSerProfile'])->name('update-user-profile');
 
 
 

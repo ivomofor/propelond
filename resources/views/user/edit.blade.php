@@ -32,22 +32,6 @@
             @enderror
         
     </div> 
-
-      {{-- <div class="col-md-3 border-right">
-        <div>
-            Cover Photo
-            <img src="{{ asset('userImages/' . $user->cover_photo) }}" alt="{{$user->cover_photo}}" >  <br>
-            <input type="file" name="cover_photo" class="hidden">
-            
-        </div>
-
-            @error('cover_photo')
-                <span class="invalid-feedback" role="alert"> 
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
-        
-    </div>  --}}
    
     <button type="submit" class="btn btn-primary px-5">
         Save

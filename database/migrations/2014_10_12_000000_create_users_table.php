@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('dob')->nullable();
             $table->string('email')->unique();
             $table->integer('phone_number')->nullable()->default(null);
-            $table->text('about')->nullable()->default(null);
+            $table->longText('about')->nullable()->default(null);
             $table->string('avatar')->nullable(); 
             $table->string('cover_photo')->nullable(); 
             $table->string('city')->nullable();
