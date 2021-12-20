@@ -18,6 +18,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/user-profile.css') }}" rel="stylesheet">
+
 </head>
 <body>
     <div id="app">
@@ -35,6 +37,10 @@
                             <a class="navbar center" href="{{ url('/') }}">Home</a>
                         </li>
                     </ul>
+
+                        {{-- <a href="{{ url('/user/show', $user->id) }}" >
+                        View Profile
+                        </a> --}}
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
@@ -79,5 +85,6 @@
             @yield('content')
         </main>
     </div>
+    
 </body>
 </html>
