@@ -22,3 +22,37 @@
 #user-dob{
     left: 20rem;
 }
+
+/* ==================== dashboard ========================= */
+
+/* ------ Navbar ------ */
+.search-bar{
+    background-color: #EEEEEE;
+    border-radius: 50px;
+    width: 22rem;
+}
+.search-box{
+    background-color: #EEEEEE;
+    border: none;
+    width: 20rem;
+    outline: none;
+}
+.nav-link-icons{
+    background-color: #EEEEEE;
+    border-radius: 100px;
+}
+/* .nav-link-icons:hover{
+    background-color: #D2E3FF;
+} */
+.nav-link-icons:focus{
+    background-color: #D2E3FF; 
+}
+
+.active-link{
+    background-color: #D2E3FF;
+}
+
+
+
+
+
