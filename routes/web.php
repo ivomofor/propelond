@@ -40,3 +40,45 @@ Route::post('commented/{id}', [CommentController::class, 'comment']);
 
 
 
+ 
+//  Route::get('/email/verify', function () {
+//     return view('auth.verify-email');
+// })->middleware('auth')->name('verification.notice');
+// Route::get('/', [PagesController::class, 'index']);
+// Route::resource('/post', PostsController::class);
+// Route::resource('/user', UserController::class);
+// Auth::routes(['verify' => true]);
+
+
+// Route::group([
+    
+//     'middleware' => 'api',
+//     'prefix'=>'auth',
+
+// ],
+//     function(){
+//         Route::post('/register',[AuthController::class, 'register']);
+       
+//     }
+// );
+
+
+// Route::group([
+    
+//     'middleware' => 'api',
+//     'prefix'=>'auth',
+// ],
+//     function(){
+//         Route::post('register', [\App\Http\Controllers\AuthController::class, 'register']);
+        
+//     }
+// );
+
+Route::prefix('auth')->group(function () {
+    Route::post('/register', [App\Http\Controllers\AuthController::class, 'register']);
+
+});
+
+Route::prefix('users')->group(function () {
+    Route::get('/', [App\Http\Controllers\UserController::class, 'index']);
+});
