@@ -24,26 +24,9 @@ use App\Http\Controllers\UserController;
 
 //Authentication
 
-// Route::get('register',[UserController::class, 'register']);
-
-// Route::get('/', [UserController::class, 'index']);
-// Route::get('/', [App\Http\Controllers\UserController::class, 'index']);
-
-// Route::prefix('auth')->group(function () {
-//     Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register']);
-
-// });
-
-
-    Route::post('register', [App\Http\Controllers\AuthController::class, 'register']);
-    Route::post('login', [App\Http\Controllers\AuthController::class, 'login']);
-    Route::post('logout', [App\Http\Controllers\AuthController::class, 'logout']);
-
-
-
-
-
-
+Route::post('register', [App\Http\Controllers\AuthController::class, 'register']);
+Route::post('login', [App\Http\Controllers\AuthController::class, 'login']);
+Route::post('logout', [App\Http\Controllers\AuthController::class, 'logout']);
 
 Route::prefix('users')->group(function () {
     Route::get('/', [App\Http\Controllers\UserController::class, 'index']);
