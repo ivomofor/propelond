@@ -103,27 +103,6 @@ class UserController extends Controller
             "user" => $user,
         ], 200);
 
-
-
-        // $userAvatar = uniqid(). '-' . '.' . $request->avatar->extension();
-        // $request->avatar->move(public_path('userImages'), $userAvatar);
-
-        // $userCoverPhoto = uniqid(). '-' . '.' . $request->cover_photo->extension();
-        // $request->cover_photo->move(public_path('userImages'), $userCoverPhoto);
-
-
-        // User::where('id', $id)->update([
-        //     'first_name' => $request->input('first_name'),
-        //     'last_name' => $request->input('last_name'),
-        //     'email'     => $request->input('email'),
-        //     'about' => $request->input('about'),
-        //     'avatar' => $userAvatar,
-        //     'cover_photo' => $userCoverPhoto
-        // ]);
-
-
-        // return redirect(route('user.index'))->with(['message' => 'User Profile Successfully Updated']);
-
     }
 
     /**

@@ -5,7 +5,6 @@ use App\Http\Controllers\PostsController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
-use PHPUnit\TextUI\XmlConfiguration\Group;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,45 +17,18 @@ use PHPUnit\TextUI\XmlConfiguration\Group;
 |
 */
 
- 
-//  Route::get('/email/verify', function () {
-//     return view('auth.verify-email');
-// })->middleware('auth')->name('verification.notice');
-// Route::get('/', [PagesController::class, 'index']);
-// Route::resource('/post', PostsController::class);
-// Route::resource('/user', UserController::class);
-// Auth::routes(['verify' => true]);
+
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
 
 
-// Route::group([
-    
-//     'middleware' => 'api',
-//     'prefix'=>'auth',
 
-// ],
-//     function(){
-//         Route::post('/register',[AuthController::class, 'register']);
-       
-//     }
-// );
+Route::get('/', [PagesController::class, 'index']);
+
+Route::resource('/post', PostsController::class);
+Route::resource('/user', UserController::class);
 
 
-// Route::group([
-    
-//     'middleware' => 'api',
-//     'prefix'=>'auth',
-// ],
-//     function(){
-//         Route::post('register', [\App\Http\Controllers\AuthController::class, 'register']);
-        
-//     }
-// );
+Auth::routes(['verify' => true]);
 
-Route::prefix('auth')->group(function () {
-    Route::post('/register', [App\Http\Controllers\AuthController::class, 'register']);
-
-});
-
-Route::prefix('users')->group(function () {
-    Route::get('/', [App\Http\Controllers\UserController::class, 'index']);
-});
