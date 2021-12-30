@@ -42,6 +42,27 @@
           @if (isset(Auth::user()->id) && Auth::user()->id == $post->user_id)
 
           <div>
+            <a href="{{ url('liked/'.$post->id.'/') }}">
+              <span class="">Like</span>           
+            </a>
+            <a href="{{ url('unlike/'.$post->id.'/') }}">
+              <span class="">Unlike</span>
+            </a>
+
+            <h5>Add Comment</h5>
+            <form method="POST" action="{{ url('commented/'.$post->id.'/') }}">
+              <textarea class="form-control" name="content">Comment</textarea>
+              <input type="hidden" name="_token" value=" {{csrf_token()}} ">
+              <input type="hidden" name="post_id" value=" {{$post->id}} ">
+              <input type="submit" name="submit" value="submit" class="btn btn-primary">
+            </form>
+            <div>
+            
+
+            </div>
+            <?php echo "<br>";?>
+            
+          <div>
             <a href="{{ route('post.edit', $post->id) }}">
               Edit
             </a>
