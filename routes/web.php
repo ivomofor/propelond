@@ -40,3 +40,18 @@ Route::post('commented/{id}', [CommentController::class, 'comment']);
 
 
 
+
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+
+
+Route::get('/', [PagesController::class, 'index']);
+
+Route::resource('/post', PostsController::class);
+Route::resource('/user', UserController::class);
+
+
+Auth::routes(['verify' => true]);
+

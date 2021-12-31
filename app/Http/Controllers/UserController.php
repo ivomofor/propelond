@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+
 
 class UserController extends Controller
 {
@@ -13,16 +16,12 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function __construct()
-    {
-        $this->middleware(['auth', 'verified']);
-    }
+ 
 
     public function index()
     {  
         $users = User::all();
-        return view('user.index')
-               ->with('users', $users);
+        return $users;
     }
 
     /**
@@ -30,10 +29,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -55,8 +51,8 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-
-        return view('user.show')->with('user',$user);
+        return $user;
+        // return view('user.show')->with('user',$user);
     }
 
     /**
@@ -78,36 +74,34 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-
-        $this->validate($request, [
-            'first_name' => 'required',
-            'last_name' => ['required','string', 'max:255'],
-            'about' => ['required','string'],
-            'email' => ['required', 'string', 'email', 'max:255'],
-            'avatar' => 'required|mimes:jpg,png,jpeg|max:5048',   
-            // 'cover_photo' => 'required|mimes:jpg,png,jpeg|max:5048' 
+        $validated = $request->validate([
+            'title' => 'required|unique:posts|max:255',
+            'body' => 'required',
         ]);
 
-        $userAvatar = uniqid(). '-' . '.' . $request->avatar->extension();
-        $request->avatar->move(public_path('userImages'), $userAvatar);
+        $user = auth()->user();
 
-        // $userCoverPhoto = uniqid(). '-' . '.' . $request->cover_photo->extension();
-        // $request->cover_photo->move(public_path('userImages'), $userCoverPhoto);
+        $user->about = $request->about;
+        $user->phone_number = $request->phone_number;  
+        $users = User::where('phone_number', $request->phone_number)
+                            ->where('id', '!=', $user->id)
+                            ->get();
 
+        if (sizeof($users) > 0) {
+            return response()->json([
+                "success" => false,
+                "message"  => "Phone number exists with another user",
+            ], 400);
+        }  
+        $user->save();  
 
-        User::where('id', $id)->update([
-            'first_name' => $request->input('first_name'),
-            'last_name' => $request->input('last_name'),
-            'email'     => $request->input('email'),
-            'about' => $request->input('about'),
-            'avatar' => $userAvatar,
-            // 'cover_photo' => $userCoverPhoto
-        ]);
-
-
-        return redirect(route('user.index'))->with(['message' => 'User Profile Successfully Updated']);
+        return response()->json([
+            "success" => true,
+            "message" => "Profile updated successfully", 
+            "user" => $user,
+        ], 200);
 
     }
 
