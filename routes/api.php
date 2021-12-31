@@ -22,7 +22,7 @@ use App\Http\Controllers\UserController;
 //     return $request->user();
 // });
 
-//Authentication
+//User Authentication
 
 Route::post('register', [App\Http\Controllers\AuthController::class, 'register']);
 Route::post('login', [App\Http\Controllers\AuthController::class, 'login']);
