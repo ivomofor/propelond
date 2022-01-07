@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\VerifyMail;
 
 class AuthController extends Controller
 {
@@ -37,11 +37,16 @@ class AuthController extends Controller
         $user = User::create(array_merge(
             $validator->validated(),
             ['password'=> Hash::make($request->password)]));
+        
+        if ($user) {
+            Mail::to($request->email)->send(new VerifyMail($this->user));
 
-            return response()->json([
-                'message' => 'User successfully registered',
-                'user' => $user,
-            ], 201);
+        }
+
+        return response()->json([
+            'message' => 'User successfully registered',
+            'user' => $user,
+        ], 201);
 
     }
 
@@ -59,7 +64,7 @@ class AuthController extends Controller
         if (! $token = auth('api')->attempt($request->only(['email','password']))) {
 
             return response()->json([
-                'error' => 'Unauthorized' ], 
+                'error' => 'Unauthorized. Email and password do not match' ], 
             401);
         }
 

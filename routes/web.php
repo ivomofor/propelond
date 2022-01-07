@@ -7,6 +7,8 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CommentController;
+use Illuminate\Support\Facades\Auth;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -55,3 +57,4 @@ Route::resource('/user', UserController::class);
 
 Auth::routes(['verify' => true]);
 
+?>

@@ -28,3 +28,5 @@ Route::delete('posts/{id}', [PostController::class, 'destroy'])->middleware('jwt
 
 
 
+?>
+
