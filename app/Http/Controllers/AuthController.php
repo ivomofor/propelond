@@ -44,7 +44,7 @@ class AuthController extends Controller
         }
 
         return response()->json([
-            'message' => 'User successfully registered',
+            'message' => 'User successfully registered.Please check your email for a verification link',
             'user' => $user,
         ], 201);
 
@@ -79,6 +79,40 @@ class AuthController extends Controller
             'expires_in' => auth()->factory()->getTTL() * 60,
             'user' => auth()->user()
         ]);
+    }
+
+
+    //update user's password
+    public function updatePassword(Request $request){
+        $this->validate($request,
+        [
+            'current_password' => 'required|string|min:6',
+            'new_password' => 'required|confirmed|string|min:6'
+        ]);
+
+        $user = auth()->user();
+        $check_password = password_verify($request->current_password,$user->password);
+       
+        if(!$check_password){
+            return response()->json([
+                'success' => false,
+                'message' => 'Your Password is not correct'
+            ], 400);
+        }elseif ($request->current_password == $request->new_password) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You can\'t change to the same password'
+            ], 400);
+        }else {
+            $obj_user = User::find($user->id);
+            $obj_user->password = Hash::make($request->new_password);
+            $obj_user->save(); 
+            return response()->json([
+                'success' => true,
+                'message' => 'You successfully updated your password',
+                'user' =>$this->me()->original,
+            ], 200);
+        }
     }
 
 

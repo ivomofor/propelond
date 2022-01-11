@@ -1,17 +1,18 @@
 
-<!-- Stored in resources/views/layouts/master.blade.php -->
+@component('mail::message')
+# Verify Your email address
 
-<html>
-    <head>
-        <title>App Name - @yield('title')</title>
-    </head>
-    <body>
-       
-            This is the master sidebar.
-      
 
-        <div class="container">
-        <button><a href=" {{ route(' ') }} ">Verify Email address</a></button>            
-        </div>
-    </body>
-</html>
+{{-- Hello {{ $user->name}},  <br> <br> --}}
+
+welcome to Propelond.  <br>
+Please verify your email address
+
+@component('mail::button', ['url' => ''])
+Verify Email Address
+@endcomponent
+
+
+Thanks,<br>
+{{ config('app.name') }}
+@endcomponent

@@ -74,17 +74,16 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'title' => 'required|unique:posts|max:255',
-            'body' => 'required',
-        ]);
-
+        
+        
         $user = auth()->user();
-
         $user->about = $request->about;
-        $user->phone_number = $request->phone_number;  
+        $user->phone_number = $request->phone_number; 
+        $user->city = $request->city; 
+        $user->country = $request->country; 
+
         $users = User::where('phone_number', $request->phone_number)
                             ->where('id', '!=', $user->id)
                             ->get();
@@ -102,6 +101,9 @@ class UserController extends Controller
             "message" => "Profile updated successfully", 
             "user" => $user,
         ], 200);
+
+        
+
 
     }
 

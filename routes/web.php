@@ -52,7 +52,7 @@ Route::get('/email/verify', function () {
 Route::get('/', [PagesController::class, 'index']);
 
 Route::resource('/post', PostsController::class);
-Route::resource('/user', UserController::class);
+// Route::resource('/user', UserController::class);
 
 
 Auth::routes(['verify' => true]);
