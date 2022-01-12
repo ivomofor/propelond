@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Models\User;
 
-class Post extends JsonResource
+class PostResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
