@@ -18,8 +18,10 @@ class CreatePostsTable extends Migration
             $table->longText('description')->nullable();
             $table->string('image_path')->nullable();
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')
+            ->on('users')->onDelete('cascade');
         });
     }
 
