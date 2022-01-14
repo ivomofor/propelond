@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\VerifyMail;
 
 class AuthController extends Controller
 {
@@ -37,11 +37,25 @@ class AuthController extends Controller
         $user = User::create(array_merge(
             $validator->validated(),
             ['password'=> Hash::make($request->password)]));
+        
+        if ($user) {
+            Mail::to($request->email)->send(new VerifyMail($this->user));
+
+        }
+
+        if (! $token = auth('api')->attempt($request->only(['email','password']))) {
 
             return response()->json([
-                'message' => 'User successfully registered',
-                'user' => $user,
-            ], 201);
+                'error' => 'Unauthorized. Email and password do not match' ], 
+            401);
+        }
+
+
+        return response()->json([
+            'message' => 'User successfully registered.Please check your email for a verification link',
+            'user' => $user,
+            'Token' => $this->createNewToken($token),
+        ], 201);
 
     }
 
@@ -59,7 +73,7 @@ class AuthController extends Controller
         if (! $token = auth('api')->attempt($request->only(['email','password']))) {
 
             return response()->json([
-                'error' => 'Unauthorized' ], 
+                'error' => 'Unauthorized. Email and password do not match' ], 
             401);
         }
 
@@ -74,6 +88,40 @@ class AuthController extends Controller
             'expires_in' => auth()->factory()->getTTL() * 60,
             'user' => auth()->user()
         ]);
+    }
+
+
+    //update user's password
+    public function updatePassword(Request $request){
+        $this->validate($request,
+        [
+            'current_password' => 'required|string|min:6',
+            'new_password' => 'required|confirmed|string|min:6'
+        ]);
+
+        $user = auth()->user();
+        $check_password = password_verify($request->current_password,$user->password);
+       
+        if(!$check_password){
+            return response()->json([
+                'success' => false,
+                'message' => 'Your Password is not correct'
+            ], 400);
+        }elseif ($request->current_password == $request->new_password) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You can\'t change to the same password'
+            ], 400);
+        }else {
+            $obj_user = User::find($user->id);
+            $obj_user->password = Hash::make($request->new_password);
+            $obj_user->save(); 
+            return response()->json([
+                'success' => true,
+                'message' => 'You successfully updated your password',
+                'user' =>$this->me()->original,
+            ], 200);
+        }
     }
 
 

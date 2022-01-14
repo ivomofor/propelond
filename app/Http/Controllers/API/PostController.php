@@ -63,7 +63,8 @@ class PostController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'post successfully created',
-                'post' => $post
+                'post' => $post,
+                'user_id' => $request->user()
             ]);
         else
             return response()->json([
@@ -90,7 +91,8 @@ class PostController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'post successful updated',
-                'post' => $post
+                'post' => $post,
+                'user_id' => $request->user()
             ]);
         } else {
             return response()->json([
