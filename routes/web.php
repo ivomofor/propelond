@@ -7,6 +7,8 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CommentController;
+use Illuminate\Support\Facades\Auth;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -50,8 +52,9 @@ Route::get('/email/verify', function () {
 Route::get('/', [PagesController::class, 'index']);
 
 Route::resource('/post', PostsController::class);
-Route::resource('/user', UserController::class);
+// Route::resource('/user', UserController::class);
 
 
 Auth::routes(['verify' => true]);
 
+?>
