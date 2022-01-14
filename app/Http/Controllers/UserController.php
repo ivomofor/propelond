@@ -84,16 +84,6 @@ class UserController extends Controller
         $user->city = $request->city; 
         $user->country = $request->country; 
 
-        $users = User::where('phone_number', $request->phone_number)
-                            ->where('id', '!=', $user->id)
-                            ->get();
-
-        if (sizeof($users) > 0) {
-            return response()->json([
-                "success" => false,
-                "message"  => "Phone number exists with another user",
-            ], 400);
-        }  
         $user->save();  
 
         return response()->json([
@@ -101,10 +91,6 @@ class UserController extends Controller
             "message" => "Profile updated successfully", 
             "user" => $user,
         ], 200);
-
-        
-
-
     }
 
     /**
@@ -115,6 +101,12 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $id = User::findOrFail($id);
+        $id->delete();
+
+        return response()->json([
+            "success" => true,
+            "message"  => "User Successfully deleted",
+        ], 200);
     }
 }

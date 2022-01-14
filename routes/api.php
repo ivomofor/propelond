@@ -16,8 +16,11 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout']);
 
 Route::prefix('users')->group(function () {
-    Route::get('/', [UserController::class, 'index']);
-    Route::post('update/{id}', [UserController::class, 'update']);
+    Route::get('/', [App\Http\Controllers\UserController::class, 'index']);
+    Route::post('/user/{user} ', [App\Http\Controllers\UserController::class, 'update']);
+    Route::get('/user/{user}', [App\Http\Controllers\UserController::class, 'show']);
+    Route::delete('/user/{user}',[App\Http\Controllers\UserController::class, 'destroy']);
+
 });
 
 Route::get('posts', [PostController::class, 'index'])->middleware('jwtAuth');

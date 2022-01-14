@@ -43,9 +43,18 @@ class AuthController extends Controller
 
         }
 
+        if (! $token = auth('api')->attempt($request->only(['email','password']))) {
+
+            return response()->json([
+                'error' => 'Unauthorized. Email and password do not match' ], 
+            401);
+        }
+
+
         return response()->json([
             'message' => 'User successfully registered.Please check your email for a verification link',
             'user' => $user,
+            'Token' => $this->createNewToken($token),
         ], 201);
 
     }
