@@ -26,3 +26,22 @@
     </div>
 </div>
 @endsection
+
+@component('mail::message')
+# Verify Email address
+
+
+{{-- Hello {{ $user->name}},  <br> <br> --}}
+
+welcome to Propelond.  <br>
+Please verify your email address
+
+@component('mail::button', ['url' => ''])
+Button Text
+@endcomponent
+
+
+Thanks,<br>
+{{ config('app.name') }}
+@endcomponent
+
