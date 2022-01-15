@@ -28,11 +28,8 @@ Route::get('posts/{id}', [PostController::class, 'show'])->middleware('jwtAuth')
 Route::post('posts/create', [PostController::class, 'create'])->middleware('jwtAuth');
 Route::put('posts/{id}', [PostController::class, 'update'])->middleware('jwtAuth');
 Route::delete('posts/{id}', [PostController::class, 'destroy'])->middleware('jwtAuth');
-<<<<<<< HEAD
-=======
 
 
 
 ?>
 
->>>>>>> 5311290121162867229c8c1ac7e4a11ab41028e5
