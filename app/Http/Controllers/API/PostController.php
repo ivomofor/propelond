@@ -23,29 +23,29 @@ class PostController extends Controller
     }
 
     public function index(){
-    
+
         return PostResource::collection(Post::all());
-       
+
     }
 
     public function show($id)
     {
         $post = $this->user->post()->find($id);
-    
+
         if (!$post) {
             return response()->json([
                 'success' => false,
                 'message' => 'Sorry, post with id ' . $id . ' cannot be found'
             ], 400);
         }
-    
+
         return $post;
     }
 
     public function create(Request $request)
     {
             $this->validate($request, [
-                'description' => 'required|max:255|unique:posts'                   
+                'description' => 'required|max:255|unique:posts'
             ]);
 
             $post = new Post;
@@ -58,41 +58,41 @@ class PostController extends Controller
                 $post->image_path=$filename;
                 $request->image_path->move(public_path('images'),$filename);
             }
-            
-            if ($this->user->post()->save($post))
-            return response()->json([
-                'success' => true,
-                'message' => 'post successfully created',
-                'post' => $post,
-                'user_id' => $request->user()
-            ]);
-        else
-            return response()->json([
-                'success' => false,
-                'message' => 'Sorry, post could not be added'
-            ], 500);
+
+            if ($this->user->post()->save($post)) {
+                $responsePost = Post::with('user')->where('id', $post->id)->first();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'post successfully created',
+                    'post' => $responsePost
+                ]);
+            }else
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Sorry, post could not be added'
+                ], 500);
     }
 
     public function update(Request $request, $id)
     {
         $post = $this->user->post()->find($id);
-    
+
         if (!$post) {
             return response()->json([
                 'success' => false,
                 'message' => 'Sorry, post with id ' . $id . ' cannot be found'
             ], 400);
         }
-    
+
         $updated = $post->fill($request->all())
             ->save();
-    
+
         if ($updated) {
+            $responsePost = Post::with('user')->where('id', $post->id)->first();
             return response()->json([
                 'success' => true,
                 'message' => 'post successful updated',
-                'post' => $post,
-                'user_id' => $request->user()
+                'post' => $responsePost
             ]);
         } else {
             return response()->json([
@@ -106,14 +106,14 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = $this->user->post()->find($id);
-    
+
         if (!$post) {
             return response()->json([
                 'success' => false,
                 'message' => 'Sorry, post with id ' . $id . ' cannot be found'
             ], 400);
         }
-    
+
         if ($post->delete()) {
             return response()->json([
                 'success' => true,
