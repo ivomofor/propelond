@@ -25,7 +25,7 @@ Route::prefix('users')->group(function () {
 
 Route::get('posts', [PostController::class, 'index'])->middleware('jwtAuth');
 Route::get('posts/{id}', [PostController::class, 'show'])->middleware('jwtAuth');
-Route::post('posts/create', [PostController::class, 'create'])->middleware('jwtAuth');
+Route::post('posts', [PostController::class, 'create'])->middleware('jwtAuth');
 Route::put('posts/{id}', [PostController::class, 'update'])->middleware('jwtAuth');
 Route::delete('posts/{id}', [PostController::class, 'destroy'])->middleware('jwtAuth');
 
