@@ -10,7 +10,6 @@ use App\Http\Resources\PostResource;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use App\Models\Post;
 
 class PostController extends Controller
