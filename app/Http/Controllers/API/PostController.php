@@ -10,6 +10,7 @@ use App\Http\Resources\PostResource;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use App\Models\Post;
 
 class PostController extends Controller
@@ -54,7 +55,7 @@ class PostController extends Controller
             if($request->file('image_path')==NULL){
                 $post->image_path='placeholder.png';
             }else{
-                $filename=Str::random(20) . '.' . $request->file('image_path')->getClientOriginalExtension();
+                $filename=$request->file('image_path')->getClientOriginalName();
                 $post->image_path=$filename;
                 $request->image_path->move(public_path('images'),$filename);
             }
