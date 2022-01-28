@@ -57,13 +57,13 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        // if (!$user) {
-        //     return response()->json([
-        //         'success' => false,
-        //         'message' => 'Sorry, post with id ' . $id . ' cannot be found'
-        //     ], 400);
-        // }
-        // return $user;
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Sorry, post with id ' . $id . ' cannot be found'
+            ], 400);
+        }
+        return $user;
         
         return view('user.show')->with('user',$user);
     }
