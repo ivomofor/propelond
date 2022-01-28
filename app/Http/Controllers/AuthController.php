@@ -27,7 +27,7 @@ class AuthController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'gender' => ['required','string', 'max:255'],
             'dob' => ['required','string'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:3', 'confirmed'],
         ]);
 
         if($validator->fails()){
@@ -54,8 +54,8 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'User successfully registered.Please check your email for a verification link',
             'user' => $user,
-            'Token' => $this->createNewToken($token),
-        ], 201);
+            'token' => $this->createNewToken($token),
+        ], 200);
 
     }
 
@@ -93,14 +93,17 @@ class AuthController extends Controller
 
     //update user's password
     public function updatePassword(Request $request){
+ 
         $this->validate($request,
         [
-            'current_password' => 'required|string|min:6',
-            'new_password' => 'required|confirmed|string|min:6'
+            'current_password' => 'required|string|min:3',
+            'new_password' => 'required|confirmed|string|min:3'
         ]);
+        
 
         $user = auth()->user();
-        $check_password = password_verify($request->current_password,$user->password);
+        $check_password = password_verify($request->current_password,$user->password);       
+
        
         if(!$check_password){
             return response()->json([

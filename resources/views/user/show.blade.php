@@ -8,9 +8,9 @@
                     {{-- <button class="btn btn-secondary"> --}}
                    
 
-                    <div class="upper"> <img src="{{asset('userImages/' . $user->avatar) }}" class="img-fluid"> </div>
+                    <div class="upper"> <img src="{{asset('img/coverImage.jpg') }}" class="img-fluid"> </div>
 
-                    <img src="{{asset('userImages/' . $user->cover_photo)}}" height="100" width="100" /></button>
+                    <img src="{{asset('img/profile1.jpeg')}}" height="100" width="100" /></button>
     
 
                      <span class="name mt-3"> {{$user->first_name}} {{$user->last_name}}  </span> 
@@ -18,9 +18,10 @@
                     <div class="d-flex flex-row justify-content-center align-items-center gap-2"> <span class="idd1">Gender: {{$user->gender}} </span> <span><i class="fa fa-copy"></i></span> </div>
                     <div class="d-flex flex-row justify-content-center align-items-center gap-2"> <span class="idd1">Phone Number: {{$user->phone_number}} </span> 678678678  <span><i class="fa fa-copy"></i></span> </div>
     
-                    <button class="btn btn-primary btn-sm follow">Follow</button>
+                    <a href=""></a><button class="btn btn-primary btn-sm follow">Follow</button>
                     <div class="d-flex flex-row justify-content-center align-items-center mt-3"> <span class="number">1069 <span class="follow">Followers</span></span> </div>
-                   
+                    <div class="d-flex flex-row justify-content-center align-items-center mt-3"> <span class="number">106 <span class="follow">Following</span></span> </div>
+
                    
                     <a href="{{ route('user.edit', $user->id) }}">
                         Edit Profile
