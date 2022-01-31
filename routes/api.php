@@ -28,7 +28,7 @@ Route::get('posts/{id}', [PostController::class, 'show'])->middleware('jwtAuth')
 Route::post('posts', [PostController::class, 'create'])->middleware('jwtAuth');
 Route::put('posts/{id}', [PostController::class, 'update'])->middleware('jwtAuth');
 Route::delete('posts/{id}', [PostController::class, 'destroy'])->middleware('jwtAuth');
-
+Route::post('posts/{post_id}/comments/', [UserController::class, 'create'])->middleware('jwtAuth');
 
 
 ?>
