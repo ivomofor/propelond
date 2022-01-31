@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:api',['except'=>['index','show']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -51,8 +57,15 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::find($id);
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Sorry, post with id ' . $id . ' cannot be found'
+            ], 400);
+        }
         return $user;
-        // return view('user.show')->with('user',$user);
+        
+        return view('user.show')->with('user',$user);
     }
 
     /**
@@ -74,7 +87,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         
         
@@ -93,6 +106,19 @@ class UserController extends Controller
         ], 200);
     }
 
+    public function updateAvatar(Request $request )
+    {
+        $user = User::findOrFail(auth()->user()->id);
+
+        if($request->file('avatar')==NULL){
+            $user->avatar='avatar_placeholder.png';
+        }else{
+            $filename=Str::random(20) . '.' . $request->file('avatar')->getClientOriginalExtension();
+            $user->avatar=$filename;
+            $request->avatar->move(public_path('images'),$filename);
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -101,8 +127,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $id = User::findOrFail($id);
-        $id->delete();
+        $user = User::findOrFail($id);
+        $user->delete();
 
         return response()->json([
             "success" => true,
