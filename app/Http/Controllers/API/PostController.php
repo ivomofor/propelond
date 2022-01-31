@@ -45,7 +45,7 @@ class PostController extends Controller
     public function create(Request $request)
     {
             $this->validate($request, [
-                'description' => 'required|max:255|unique:posts'
+                'description' => 'required|max:1024|unique:posts'
             ]);
 
             $post = new Post;
@@ -54,9 +54,9 @@ class PostController extends Controller
             if($request->file('image_path')==NULL){
                 $post->image_path='placeholder.png';
             }else{
-                $filename=$request->file('image_path')->getClientOriginalName();
-                $post->image_path=$filename;
-                $request->image_path->move(public_path('images'),$filename);
+                $response = cloudinary()->upload($request->file('image_path')->getRealPath())->getSecurePath();
+                $post->image_path=$response;
+                
             }
 
             if ($this->user->post()->save($post)) {
