@@ -2,17 +2,17 @@
 
 @section('content')
 
-<div class="container">
+{{-- <div class="container">
   <div class="row justify-content-center">
 
-      @if (session()->has('message'))
+       @if (session()->has('message'))
           <div>
             <p class="">
               {{ session()->get('message') }}
             </p>
           </div>
         
-      @endif
+      @endif  
 
       @if (Auth::check())
 
@@ -23,7 +23,7 @@
         </div>
         
       @endif
-        
+         
          @foreach ($posts as $post)
          
             <div class="">
@@ -62,7 +62,7 @@
             </div>
             <?php echo "<br>";?>
             
-          <div>
+          <div>m
             <a href="{{ route('post.edit', $post->id) }}">
               Edit
             </a>
@@ -84,6 +84,9 @@
 
         
     </div>
+</div>  --}}
+<div>
+  <p>Hello</p>
 </div>
 @endsection
 

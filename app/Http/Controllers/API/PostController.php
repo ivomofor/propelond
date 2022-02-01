@@ -24,10 +24,9 @@ class PostController extends Controller
 
     public function index(){
 
-        return PostResource::collection(Post::all());
+        return PostResource::collection(Post::orderBy('id', 'DESC')->get());
 
     }
-
     public function show($id)
     {
         $post = $this->user->post()->find($id);
@@ -45,7 +44,7 @@ class PostController extends Controller
     public function create(Request $request)
     {
             $this->validate($request, [
-                'description' => 'required|max:255|unique:posts'
+                'description' => 'max:1024|unique:posts'
             ]);
 
             $post = new Post;
@@ -54,9 +53,9 @@ class PostController extends Controller
             if($request->file('image_path')==NULL){
                 $post->image_path='placeholder.png';
             }else{
-                $filename=Str::random(20) . '.' . $request->file('image_path')->getClientOriginalExtension();
-                $post->image_path=$filename;
-                $request->image_path->move(public_path('images'),$filename);
+                $response = cloudinary()->upload($request->file('image_path')->getRealPath())->getSecurePath();
+                $post->image_path=$response;
+                
             }
 
             if ($this->user->post()->save($post)) {
