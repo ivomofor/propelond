@@ -24,10 +24,9 @@ class PostController extends Controller
 
     public function index(){
 
-        return PostResource::collection(Post::all());
+        return PostResource::collection(Post::orderBy('id', 'DESC')->get());
 
     }
-
     public function show($id)
     {
         $post = $this->user->post()->find($id);
@@ -45,7 +44,7 @@ class PostController extends Controller
     public function create(Request $request)
     {
             $this->validate($request, [
-                'description' => 'required|max:1024|unique:posts'
+                'description' => 'max:1024|unique:posts'
             ]);
 
             $post = new Post;
