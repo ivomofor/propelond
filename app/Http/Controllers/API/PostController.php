@@ -53,7 +53,7 @@ class PostController extends Controller
             if($request->file('image_path')==NULL){
                 $post->image_path='placeholder.png';
             }else{
-                $response = cloudinary()->upload($request->file('image_path')->getRealPath())->getSecurePath();
+                $response =  $request->file('image_path')->store('post_images', 'cloudinary');
                 $post->image_path=$response;
                 
             }
