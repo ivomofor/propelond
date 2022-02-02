@@ -94,6 +94,8 @@ class UserController extends Controller
         $user = auth()->user();
         $user->about = $request->about;
         $user->phone_number = $request->phone_number; 
+        $user->occupation = $request->occupation; 
+        $user->hobbies = $request->hobbies; 
         $user->city = $request->city; 
         $user->country = $request->country; 
 

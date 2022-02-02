@@ -22,6 +22,8 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->integer('phone_number')->nullable()->default(null);
             $table->longText('about')->nullable()->default(null);
+            $table->string('occupation')->nullable(); 
+            $table->string('hobbies')->nullable(); 
             $table->string('avatar')->nullable(); 
             $table->string('cover_photo')->nullable(); 
             $table->string('city')->nullable();
