@@ -64,9 +64,7 @@ class UserController extends Controller
             ], 400);
         }
         return $user;
-        
-        return view('user.show')->with('user',$user);
-    }
+        }
 
     /**
      * Show the form for editing the specified resource.
