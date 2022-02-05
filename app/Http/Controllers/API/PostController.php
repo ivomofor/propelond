@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API;
 
 use Response;
-use JWTAuth;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PostResource;
@@ -14,22 +13,15 @@ use App\Models\Post;
 
 class PostController extends Controller
 {
-
-    protected $user;
-
-    public function __construct()
-    {
-        $this->user = JWTAuth::parseToken()->authenticate();
-    }
-
     public function index(){
 
         return PostResource::collection(Post::orderBy('id', 'DESC')->get());
 
     }
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $post = $this->user->post()->find($id);
+        $user = $request->user();
+        $post = $user->post()->find($id);
 
         if (!$post) {
             return response()->json([
@@ -58,7 +50,7 @@ class PostController extends Controller
                 $post->image_path=$responseurl;
             }
 
-            if ($this->user->post()->save($post)) {
+            if ($request->user()->post()->save($post)) {
                 $responsePost = Post::with('user')->where('id', $post->id)->first();
                 return response()->json([
                     'success' => true,
@@ -74,7 +66,7 @@ class PostController extends Controller
 
     public function update(Request $request, $id)
     {
-        $post = $this->user->post()->find($id);
+        $post = $request->user()->post()->find($id);
 
         if (!$post) {
             return response()->json([
@@ -102,9 +94,9 @@ class PostController extends Controller
     }
 
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $post = $this->user->post()->find($id);
+        $post = $request->user()->post()->find($id);
 
         if (!$post) {
             return response()->json([
