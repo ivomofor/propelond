@@ -32,7 +32,7 @@ class JWTMiddleware
         }catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
             // do whatever you want to do if a token is invalid
             $message = 'invalid token';
-        }catch (\Tymon\JWTAuth\Exceptions\TokenException $e) {
+        }catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
             // do whatever you want to do if a token is not present
             $message = 'provide token';
         }
@@ -40,6 +40,6 @@ class JWTMiddleware
             'success' => false,
             'message' => $message
         ]);
-        
+
     }
 }
