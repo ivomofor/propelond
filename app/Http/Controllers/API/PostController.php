@@ -15,9 +15,11 @@ class PostController extends Controller
 {
     public function index(){
 
-        return PostResource::collection(Post::orderBy('id', 'DESC')->get());
+        $posts = Post::orderBy('id', 'DESC')->get();
 
+        return PostResource::collection($posts);
     }
+
     public function show(Request $request, $id)
     {
         $user = $request->user();

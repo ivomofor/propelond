@@ -3,10 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Models\User;
-use App\Models\Comment;
 
-class PostResource extends JsonResource
+class LikeResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,13 +16,10 @@ class PostResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'description' => $this->description,
-            'image_path' => $this->image_path,
             'created_at' => (string) $this->created_at,
             'updated_at' => (string) $this->updated_at,
-            'user' => User::find($this->user_id),
-            'post_comment' => $this->comments,
-            'like_post' => $this->likes
-          ];
+            'user_id' => User::find($this->user_id),
+            'post_id' => Post::find($this->post_id)
+        ];
     }
 }

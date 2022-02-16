@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\PostController;
+use App\Http\Controllers\API\CommentController;
+use App\Http\Controllers\API\LikeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
@@ -30,7 +32,16 @@ Route::get('posts/{id}', [PostController::class, 'show'])->middleware('jwtAuth')
 Route::post('posts', [PostController::class, 'create'])->middleware('jwtAuth');
 Route::put('posts/{id}', [PostController::class, 'update'])->middleware('jwtAuth');
 Route::delete('posts/{id}', [PostController::class, 'destroy'])->middleware('jwtAuth');
-Route::post('posts/{post_id}/comments/', [UserController::class, 'create'])->middleware('jwtAuth');
+
+//Post Comment
+Route::get('comments/', [CommentController::class, 'index'])->middleware('jwtAuth');
+Route::get('comments/{id}/', [CommentController::class, 'show'])->middleware('jwtAuth');
+Route::post('posts/{post_id}/comments/', [CommentController::class, 'create'])->middleware('jwtAuth');
+Route::put('comments/{id}/', [CommentController::class, 'update'])->middleware('jwtAuth');
+Route::delete('comments/{id}/', [CommentController::class, 'delete'])->middleware('jwtAuth');
+
+//Post Likes 
+Route::post('posts/likes/{id}', [LikeController::class, 'like'])->middleware('jwtAuth');
 
 
 ?>
