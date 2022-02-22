@@ -23,8 +23,8 @@ class PostResource extends JsonResource
             'created_at' => (string) $this->created_at,
             'updated_at' => (string) $this->updated_at,
             'user' => User::find($this->user_id),
-            'post_comment' => $this->comments,
-            'like_post' => $this->likes
+            'comments' => $this->comments,
+            'likes' => $this->likes
           ];
     }
 }
