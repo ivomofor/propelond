@@ -63,10 +63,9 @@ class UserController extends Controller
                 'message' => 'Sorry, post with id ' . $id . ' cannot be found'
             ], 400);
         }
+
         return $user;
-        
-        return view('user.show')->with('user',$user);
-    }
+        }
 
     /**
      * Show the form for editing the specified resource.
@@ -77,7 +76,9 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        return view('user.edit')->with('user', $user);
+        // return view('user.edit')->with('user', $user);
+        return $user;
+
     }
 
     /**
@@ -94,10 +95,13 @@ class UserController extends Controller
         $user = auth()->user();
         $user->about = $request->about;
         $user->phone_number = $request->phone_number; 
-        $user->occupation = $request->occupation; 
-        $user->hobbies = $request->hobbies; 
         $user->city = $request->city; 
         $user->country = $request->country; 
+        $user->occupation = $request->occupation; 
+        $user->hobbies = $request->hobbies; 
+        $user->primary_school = $request->primary_school;
+        $user->secondary_school = $request->secondary_school;
+        $user->university = $request->university;
 
         $user->save();  
 
@@ -120,6 +124,16 @@ class UserController extends Controller
             $request->avatar->move(public_path('images'),$filename);
         }
     }
+
+    public function resetPassword(Request $request)
+    {
+        // There will be a route for Forgot Password
+        //  When user clicks on reset Password Button, Send Email
+        dd("JAme");
+        $userEmail = $request->email;
+        Mail::to($userEmail)->send(new ResetPasswordMail($this->user));
+    }
+
 
     /**
      * Remove the specified resource from storage.

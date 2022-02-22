@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\VerifyMail;
+use App\Mail\ResetPasswordMail;
 
 class AuthController extends Controller
 {
@@ -88,6 +89,12 @@ class AuthController extends Controller
             'expires_in' => auth()->factory()->getTTL() * 60,
             'user' => auth()->user()
         ]);
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $userEmail = $request->email;
+        Mail::to($userEmail)->send(new ResetPasswordMail($this->user));
     }
 
 

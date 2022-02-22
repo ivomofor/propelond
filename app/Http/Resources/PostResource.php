@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Models\User;
+use App\Models\Comment;
 
 class PostResource extends JsonResource
 {
@@ -21,7 +22,9 @@ class PostResource extends JsonResource
             'image_path' => $this->image_path,
             'created_at' => (string) $this->created_at,
             'updated_at' => (string) $this->updated_at,
-            'user' => User::find($this->user_id)
+            'user' => User::find($this->user_id),
+            'comments' => $this->comments,
+            'likes' => $this->likes
           ];
     }
 }

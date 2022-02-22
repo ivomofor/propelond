@@ -3,11 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Models\User;
-use App\Models\Post;
 
-
-class CommentResource extends JsonResource
+class LikeResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,7 +16,6 @@ class CommentResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'content' => $this->content,
             'created_at' => (string) $this->created_at,
             'updated_at' => (string) $this->updated_at,
             'user_id' => User::find($this->user_id),
