@@ -14,7 +14,7 @@ use App\Http\Controllers\Controller;
 
 class LikeController extends Controller
 {
-    public function like(Request $request){
+    public function like_post(Request $request){
 
         $like = Like::where('post_id',$request->id)->where('user_id',$request->user()->id)->get();
 
@@ -23,7 +23,7 @@ class LikeController extends Controller
             $like[0]->delete();
             return response()->json([
                 'success' => true,
-                'massage' => 'unliked'
+                'message' => 'unliked'
             ]);
         }
         $like = new Like;
@@ -33,7 +33,7 @@ class LikeController extends Controller
 
         return response()->json([
             'success' => true,
-            'massage' => 'liked',
+            'message' => 'liked',
             'like' => $like
         ]);
     }

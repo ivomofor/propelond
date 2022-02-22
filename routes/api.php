@@ -35,13 +35,13 @@ Route::delete('posts/{id}', [PostController::class, 'destroy'])->middleware('jwt
 
 //Post Comment
 Route::get('comments/', [CommentController::class, 'index'])->middleware('jwtAuth');
-Route::get('comments/{id}/', [CommentController::class, 'show'])->middleware('jwtAuth');
-Route::post('posts/{post_id}/comments/', [CommentController::class, 'create'])->middleware('jwtAuth');
-Route::put('comments/{id}/', [CommentController::class, 'update'])->middleware('jwtAuth');
-Route::delete('comments/{id}/', [CommentController::class, 'delete'])->middleware('jwtAuth');
+Route::get('comments/{id}/', [CommentController::class, 'show_comment'])->middleware('jwtAuth');
+Route::post('posts/{post_id}/comments/', [CommentController::class, 'post_comment'])->middleware('jwtAuth');
+Route::put('comments/{id}/', [CommentController::class, 'update_comment'])->middleware('jwtAuth');
+Route::delete('comments/{id}/', [CommentController::class, 'delete_comment'])->middleware('jwtAuth');
 
 //Post Likes 
-Route::post('posts/likes/{id}', [LikeController::class, 'like'])->middleware('jwtAuth');
+Route::post('posts/likes/{id}', [LikeController::class, 'like_post'])->middleware('jwtAuth');
 
 
 ?>

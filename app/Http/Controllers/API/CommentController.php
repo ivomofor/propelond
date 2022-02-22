@@ -20,7 +20,7 @@ class CommentController extends Controller
         return CommentResource::collection($comments);
     }
         
-    public function show(Request $request, $id){
+    public function show_comment(Request $request, $id){
 
         $comment = Comment::find($id);
 
@@ -30,17 +30,17 @@ class CommentController extends Controller
                 'message' => 'Sorry, post with id ' . $id . ' cannot be found'
             ], 400);
         }
-
+        $comment->load('user');
         return $comment;
     }
 
-    public function create($post_id, Request $request ){
+    public function post_comment($post_id, Request $request ){
         $post=Post::where('id', $post_id)->first();
 
         if($post){
             
             $validator = Validator::make($request->all(), [
-            'content' => 'd|max:250',
+            'content' => 'required|max:250',
             ]);
 
             if($validator->fails()) {
@@ -56,6 +56,7 @@ class CommentController extends Controller
                 'post_id' =>$post->id,
                 'user_id' =>$request->user()->id
            ]);
+           $comment->load('user');
 
            return response()->json([
                'message' => 'Comment successfuly created',
@@ -64,36 +65,40 @@ class CommentController extends Controller
 
         }else{
            return response()->json([
-          'massage' => 'No post found',
+          'massage' => 'No comment found',
            ], 400);
        }
     }
 
-    public function update($post_id, Request $request){
-        $post=Post::where('id', $post_id)->first();
+    public function update_comment( Request $request, $id){
 
-        $comment = Comment::find($request->id);
+        $comment = Comment::find($id);
 
-        if(!$comment){
+        if (!$comment) {
             return response()->json([
                 'success' => false,
-                'message' => 'Unauthorize access'
-            ]);
+                'message' => 'Sorry, comment with id ' . $id . ' cannot be found'
+            ], 400);
         }
-            $comment = Comment::create([
-                'content' =>$request->content,
-                'post_id' =>$post->id,
-                'user_id' =>$request->user()->id
-           ]);
-        $comment->update();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Comment edited'
-        ]);
+        $updated = $comment->fill($request->all())->save();
+
+        if ($updated) {
+            $responseComment = Comment::with('user')->where('id', $comment->id)->first();
+            return response()->json([
+                'success' => true,
+                'message' => 'comment successful updated',
+                'comment' => $responseComment
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Sorry, comment could not be updated'
+            ], 500);
+        }
     }
 
-    public function delete(Request $request, $id){
+    public function delete_comment(Request $request, $id){
         $comment = Comment::find($id);
         //check if user is editing his own comment
         if(!$comment){
