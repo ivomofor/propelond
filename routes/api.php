@@ -16,7 +16,8 @@ use App\Http\Middleware\JWTAuth;
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout']);
-Route::post('updatePassword', [AuthController::class, 'updatePassword']);
+Route::post('reset-password', [UserController::class, 'resetPassword']);
+// Route::put('updatePassword', [AuthController::class, 'updatePassword']);
 
 
 Route::prefix('users')->group(function () {
@@ -24,7 +25,6 @@ Route::prefix('users')->group(function () {
     Route::post('/user/{user} ', [App\Http\Controllers\UserController::class, 'update']);
     Route::get('/user/{user}', [App\Http\Controllers\UserController::class, 'show']);
     Route::delete('/user/{id}',[App\Http\Controllers\UserController::class, 'destroy']);
-
 });
 
 Route::get('posts', [PostController::class, 'index']);
