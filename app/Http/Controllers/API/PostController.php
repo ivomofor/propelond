@@ -53,7 +53,7 @@ class PostController extends Controller
             }
 
             if ($request->user()->post()->save($post)) {
-                $responsePost = Post::with('user')->where('id', $post->id)->first();
+                $responsePost = Post::with('user', 'likes', 'comments')->where('id', $post->id)->first();
                 return response()->json([
                     'success' => true,
                     'message' => 'post successfully created',
@@ -81,7 +81,7 @@ class PostController extends Controller
             ->save();
 
         if ($updated) {
-            $responsePost = Post::with('user')->where('id', $post->id)->first();
+            $responsePost = Post::with('user', 'likes', 'comments')->where('id', $post->id)->first();
             return response()->json([
                 'success' => true,
                 'message' => 'post successful updated',
