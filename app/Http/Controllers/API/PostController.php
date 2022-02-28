@@ -15,7 +15,9 @@ class PostController extends Controller
 {
     public function index(){
 
-        $posts = Post::orderBy('id', 'DESC')->get();
+        $limit = 6;
+        $posts = Post::orderBy('id', 'DESC')->limit($limit)->get();
+        
 
         return PostResource::collection($posts);
     }
