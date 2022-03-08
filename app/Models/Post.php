@@ -11,7 +11,7 @@ class Post extends Model
     use HasFactory;
     use MediaAlly;
 
-    protected $fillable = ['description', 'image_path', 'user_id'];
+    protected $fillable = ['description', 'image_path', 'video_path', 'user_id'];
 
     public function user()
     {

@@ -20,6 +20,7 @@ class PostResource extends JsonResource
             'id' => $this->id,
             'description' => $this->description,
             'image_path' => $this->image_path,
+            'video_path' => $this->video_path,
             'created_at' => (string) $this->created_at,
             'updated_at' => (string) $this->updated_at,
             'user' => User::find($this->user_id),
