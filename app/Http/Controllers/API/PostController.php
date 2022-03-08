@@ -39,7 +39,7 @@ class PostController extends Controller
     {
             $this->validate($request, [
                 'description' => 'max:1024|unique:posts',
-                'video_path' => 'file|mimetypes:video/mp4',
+//                'video_path' => 'file|mimetypes:video/mp4',
             ]);
 
             $post = new Post;
