@@ -17,7 +17,6 @@ class PostController extends Controller
 
         $posts = Post::orderBy('id', 'DESC')->paginate(6);
         
-
         return PostResource::collection($posts);
     }
 
@@ -39,20 +38,32 @@ class PostController extends Controller
     public function create(Request $request)
     {
             $this->validate($request, [
-                'description' => 'max:1024|unique:posts'
+                'description' => 'max:1024|unique:posts',
+                'video_path' => 'file|mimetypes:video/mp4',
             ]);
 
             $post = new Post;
             $post->description = $request->description;
 
+            //Upload image file to post object
             if($request->file('image_path')==NULL){
                 $post->image_path='placeholder.png';
             }else{
                 $response =  $request->file('image_path')->storeOnCloudinary('post_images');
-                $responseurl = $response->getPath();
-                $post->image_path=$responseurl;
+                $responseImageUrl = $response->getPath();
+                $post->image_path=$responseImageUrl;
             }
 
+            //Upload image file to post object
+            if($request->file('video_path')==NULL){
+                $post->video_path='placeholder.mp4';
+            }else{
+                $compressedVideo = $request->file('video_path')->storeOnCloudinary('post_video');
+                $responseVideoUrl = $compressedVideo->getPath();
+                $post->video_path = $responseVideoUrl;
+            }
+            
+                    
             if ($request->user()->post()->save($post)) {
                 $responsePost = Post::with('user', 'likes', 'comments')->where('id', $post->id)->first();
                 return response()->json([
