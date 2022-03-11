@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\CommentController;
+use App\Http\Controllers\API\ReportController;
 use App\Http\Controllers\API\LikeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -42,6 +43,13 @@ Route::delete('comments/{id}/', [CommentController::class, 'delete_comment'])->m
 
 //Post Likes 
 Route::post('posts/likes/{id}', [LikeController::class, 'like_post'])->middleware('jwtAuth');
+
+//Report Post
+Route::get('reports/', [ReportController::class, 'index'])->middleware('jwtAuth');
+Route::get('report/{id}/', [ReportController::class, 'show_report'])->middleware('jwtAuth');
+Route::post('posts/{post_id}/reports/', [ReportController::class, 'report_post'])->middleware('jwtAuth');
+Route::put('report/{id}/', [ReportController::class, 'update_report'])->middleware('jwtAuth');
+Route::delete('report/{id}/', [ReportController::class, 'delete_report'])->middleware('jwtAuth');
 
 
 ?>
