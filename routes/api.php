@@ -1,15 +1,15 @@
 <?php
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\API\PostController;
+use App\Http\Controllers\API\LostDocumentControllerl;
 use App\Http\Controllers\API\CommentController;
 use App\Http\Controllers\API\ReportController;
+use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\LikeController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\JWTAuth;
-
+use Illuminate\Http\Request;
 
 
 //User Authentication
@@ -28,6 +28,7 @@ Route::prefix('users')->group(function () {
     Route::delete('/user/{id}',[App\Http\Controllers\UserController::class, 'destroy']);
 });
 
+//Post
 Route::get('posts', [PostController::class, 'index']);
 Route::get('posts/{id}', [PostController::class, 'show'])->middleware('jwtAuth');
 Route::post('posts', [PostController::class, 'create'])->middleware('jwtAuth');
@@ -51,6 +52,12 @@ Route::post('posts/{post_id}/reports/', [ReportController::class, 'report_post']
 Route::put('report/{id}/', [ReportController::class, 'update_report'])->middleware('jwtAuth');
 Route::delete('report/{id}/', [ReportController::class, 'delete_report'])->middleware('jwtAuth');
 
+//Lost Document
+Route::get('lostDocs', [LostDocumentController::class, 'index']);
+Route::get('lostDocs/{id}', [LostDocumentController::class, 'show'])->middleware('jwtAuth');
+Route::post('lostDocs', [LostDocumentController::class, 'create'])->middleware('jwtAuth');
+Route::put('lostDocs/{id}', [LostDocumentController::class, 'update'])->middleware('jwtAuth');
+Route::delete('lostDocs/{id}', [LostDocumentController::class, 'destroy'])->middleware('jwtAuth');
 
 ?>
 
