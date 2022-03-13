@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\API\LostDocumentControllerl;
+use App\Http\Controllers\API\LostDocumentController;
 use App\Http\Controllers\API\CommentController;
 use App\Http\Controllers\API\ReportController;
 use App\Http\Controllers\API\PostController;
