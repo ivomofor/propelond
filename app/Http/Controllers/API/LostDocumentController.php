@@ -67,7 +67,7 @@ class LostDocumentController extends Controller
                 $lostDocs->image_path='';
             }else{
                 $response =  $request->file('image_path')->storeOnCloudinary('lost_documents');
-                $responseImageUrl = $response->getPath();
+                $responseImageUrl = $response->getSecurePath();
                 $lostDocs->image_path=$responseImageUrl;
             }
 

@@ -50,7 +50,7 @@ class PostController extends Controller
                 $post->image_path='';
             }else{
                 $response =  $request->file('image_path')->storeOnCloudinary('post_images');
-                $responseImageUrl = $response->getPath();
+                $responseImageUrl = $response->getSecurePath();
                 $post->image_path=$responseImageUrl;
             }
 
@@ -59,7 +59,7 @@ class PostController extends Controller
                 $post->video_path='';
             }else{
                 $compressedVideo = $request->file('video_path')->storeOnCloudinary('post_video');
-                $responseVideoUrl = $compressedVideo->getPath();
+                $responseVideoUrl = $compressedVideo->getSecurePath();
                 $post->video_path = $responseVideoUrl;
             }
 
