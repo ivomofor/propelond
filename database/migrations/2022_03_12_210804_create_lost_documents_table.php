@@ -15,12 +15,12 @@ class CreateLostDocumentsTable extends Migration
     {
         Schema::create('lost_documents', function (Blueprint $table) {
             $table->id();
-            $table->string('fname')->nullable();
-            $table->string('lname')->nullable();
+            $table->string('surname')->nullable();
+            $table->string('given_name')->nullable();
             $table->string('dob')->nullable();
             $table->string('profession')->nullable();
-            $table->integer('doc_number')->nullable();
-            $table->string('email')->nullable();
+            $table->integer('unique_identification_number')->nullable();
+            $table->string('place_of_pick')->nullable();
             $table->integer('phone_number')->nullable();
             $table->string('country')->nullable();
             $table->string('city')->nullable();
