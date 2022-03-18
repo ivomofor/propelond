@@ -28,6 +28,11 @@ Route::prefix('users')->group(function () {
     Route::delete('/user/{id}',[App\Http\Controllers\UserController::class, 'destroy']);
 });
 
+// Current user
+Route::middleware('jwtAuth')->get('/user', function(Request $request){
+    return $request->user();
+});
+
 //Post
 Route::get('posts', [PostController::class, 'index']);
 Route::get('posts/{id}', [PostController::class, 'show'])->middleware('jwtAuth');
@@ -42,7 +47,7 @@ Route::post('posts/{post_id}/comments/', [CommentController::class, 'post_commen
 Route::put('comments/{id}/', [CommentController::class, 'update_comment'])->middleware('jwtAuth');
 Route::delete('comments/{id}/', [CommentController::class, 'delete_comment'])->middleware('jwtAuth');
 
-//Post Likes 
+//Post Likes
 Route::post('posts/likes/{id}', [LikeController::class, 'like_post'])->middleware('jwtAuth');
 
 //Report Post
