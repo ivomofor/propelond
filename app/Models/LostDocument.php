@@ -10,9 +10,10 @@ class LostDocument extends Model
     use HasFactory;
 
     protected $fillable = [
-        'fname', 'lname', 'dob', 'profession', 
-        'doc_number', 'email', 'phone_number', 
-        'country', 'city', 'description', 'image_path', 'user_id'
+        'surname', 'given_name', 'dob', 'profession',
+        'unique_identification_number', 'place_of_pick',
+        'phone_number', 'country', 'city', 'description',
+        'image_path', 'user_id'
     ];
 
     public function user()

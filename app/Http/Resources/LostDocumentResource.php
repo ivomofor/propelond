@@ -15,15 +15,15 @@ class LostDocumentResource extends JsonResource
      */
     public function toArray($request)
     {
-        
+
         return [
             'id' => $this->id,
-            'fname' => $this->fname,
-            'lname' => $this->lname,
+            'surname' => $this->surname,
+            'given_name' => $this->given_name,
             'dob' => $this->dob,
             'profession' => $this->profession,
-            'doc_number' => $this->doc_number,
-            'email' => $this->email,
+            'unique_identification_number' => $this->unique_identification_number,
+            'place_of_pick' => $this->place_of_pick,
             'phone_number' => $this->phone_number,
             'country' => $this->country,
             'city' => $this->city,
