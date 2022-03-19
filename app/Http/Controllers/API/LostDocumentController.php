@@ -38,28 +38,26 @@ class LostDocumentController extends Controller
     public function create(Request $request)
     {
             $this->validate($request, [
-                'fname' => 'max:1024|required',
-                'lname' => 'max:1024',
+                'surname' => 'max:1024|required',
+                'given_name' => 'max:1024|required',
                 'dob' => 'max:1024',
                 'profession' => 'max:1024',
-                'doc_number' => 'max:1024',
-                'email' => 'max:1024',
-                'phone_number' => 'max:1024',
-                'country' => 'max:1024',
-                'city' => 'max:1024',
+                'unique_identification_number' => 'max:1024',
+                'place_pick' => 'max:1024',
+                'status' => 'max:1024',
+                'doc_type' => 'max:1024',
                 'description' => 'max:1024'            
             ]);
 
             $lostDocs = new LostDocument;
-            $lostDocs->fname = $request->fname;
-            $lostDocs->lname = $request->lname;
+            $lostDocs->surname = $request->surname;
+            $lostDocs->given_name = $request->given_name;
             $lostDocs->dob = $request->dob;
             $lostDocs->profession = $request->profession;
-            $lostDocs->doc_number = $request->doc_number;
-            $lostDocs->email = $request->email;
-            $lostDocs->phone_number = $request->phone_number;
-            $lostDocs->country = $request->country;
-            $lostDocs->city = $request->city;
+            $lostDocs->unique_identification_number = $request->unique_identification_number;
+            $lostDocs->place_of_pick = $request->place_of_pick;
+            $lostDocs->status = $request->status;
+            $lostDocs->doc_type = $request->doc_type;
             $lostDocs->description = $request->description;
 
             //Upload image file to lost document object
