@@ -44,9 +44,8 @@ class LostDocumentController extends Controller
                 'profession' => 'max:1024',
                 'unique_identification_number' => 'max:1024',
                 'place_pick' => 'max:1024',
-                'phone_number' => 'max:1024',
-                'country' => 'max:1024',
-                'city' => 'max:1024',
+                'status' => 'max:1024',
+                'doc_type' => 'max:1024',
                 'description' => 'max:1024'            
             ]);
 
@@ -57,9 +56,8 @@ class LostDocumentController extends Controller
             $lostDocs->profession = $request->profession;
             $lostDocs->unique_identification_number = $request->unique_identification_number;
             $lostDocs->place_of_pick = $request->place_of_pick;
-            $lostDocs->phone_number = $request->phone_number;
-            $lostDocs->country = $request->country;
-            $lostDocs->city = $request->city;
+            $lostDocs->status = $request->status;
+            $lostDocs->doc_type = $request->doc_type;
             $lostDocs->description = $request->description;
 
             //Upload image file to lost document object

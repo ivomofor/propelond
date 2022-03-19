@@ -12,7 +12,7 @@ class LostDocument extends Model
     protected $fillable = [
         'surname', 'given_name', 'dob', 'profession',
         'unique_identification_number', 'place_of_pick',
-        'phone_number', 'country', 'city', 'description',
+        'doc_type', 'status', 'description',
         'image_path', 'user_id'
     ];
 

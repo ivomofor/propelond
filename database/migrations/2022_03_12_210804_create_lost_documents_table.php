@@ -21,9 +21,8 @@ class CreateLostDocumentsTable extends Migration
             $table->string('profession')->nullable();
             $table->integer('unique_identification_number')->nullable();
             $table->string('place_of_pick')->nullable();
-            $table->integer('phone_number')->nullable();
-            $table->string('country')->nullable();
-            $table->string('city')->nullable();
+            $table->string('doc_type')->nullable();
+            $table->string('status')->nullable();
             $table->longText('description')->nullable();
             $table->string('image_path')->nullable();
             $table->unsignedBigInteger('user_id');
