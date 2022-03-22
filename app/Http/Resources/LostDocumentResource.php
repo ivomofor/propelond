@@ -27,6 +27,7 @@ class LostDocumentResource extends JsonResource
             'status' => $this->status,
             'doc_type' => $this->doc_type,
             'image_path' => $this->image_path,
+            'description' => $this->description,
             'created_at' => (string) $this->created_at,
             'updated_at' => (string) $this->updated_at,
             'user' => User::find($this->user_id)
