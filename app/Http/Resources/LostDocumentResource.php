@@ -25,7 +25,7 @@ class LostDocumentResource extends JsonResource
             'unique_identification_number' => $this->unique_identification_number,
             'place_of_pick' => $this->place_of_pick,
             'status' => $this->status,
-            'doc_type' => $this->doctype,
+            'doc_type' => $this->doc_type,
             'image_path' => $this->image_path,
             'created_at' => (string) $this->created_at,
             'updated_at' => (string) $this->updated_at,
