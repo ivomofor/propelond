@@ -13,17 +13,26 @@ use App\Models\Post;
 
 class PostController extends Controller
 {
-    public function index(){
-
+    public function index()
+    {
         $posts = Post::orderBy('id', 'DESC')->paginate(6);
 
         return PostResource::collection($posts);
     }
+    //Post veiw counter
 
+    public function view($id)
+    {
+        Post::find($id)->increment('view_count');
+        return Post::with(['user', 'likes', 'comments'])->find($id);
+    }
+
+    //Show Method display details about a particuler posts
     public function show(Request $request, $id)
     {
         $user = $request->user();
         $post = $user->post()->find($id);
+        //$post->incrementReadCount();
 
         if (!$post) {
             return response()->json([
@@ -66,6 +75,7 @@ class PostController extends Controller
 
             if ($request->user()->post()->save($post)) {
                 $responsePost = Post::with('user', 'likes', 'comments')->where('id', $post->id)->first();
+
                 return response()->json([
                     'success' => true,
                     'message' => 'post successfully created',
@@ -83,6 +93,7 @@ class PostController extends Controller
         $post = $request->user()->post()->find($id);
 
         if (!$post) {
+
             return response()->json([
                 'success' => false,
                 'message' => 'Sorry, post with id ' . $id . ' cannot be found'
@@ -94,6 +105,7 @@ class PostController extends Controller
 
         if ($updated) {
             $responsePost = Post::with('user', 'likes', 'comments')->where('id', $post->id)->first();
+
             return response()->json([
                 'success' => true,
                 'message' => 'post successful updated',

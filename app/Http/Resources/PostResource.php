@@ -23,6 +23,7 @@ class PostResource extends JsonResource
             'video_path' => $this->video_path,
             'created_at' => (string) $this->created_at,
             'updated_at' => (string) $this->updated_at,
+            'view_count' => $this->view_count,
             'user' => User::find($this->user_id),
             'comments' => $this->comments,
             'likes' => $this->likes

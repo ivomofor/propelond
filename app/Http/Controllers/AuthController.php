@@ -12,7 +12,7 @@ use App\Mail\ResetPasswordMail;
 
 class AuthController extends Controller
 {
- 
+
     protected $user;
 
     public function __construct() {
@@ -38,7 +38,7 @@ class AuthController extends Controller
         $user = User::create(array_merge(
             $validator->validated(),
             ['password'=> Hash::make($request->password)]));
-        
+
         if ($user) {
             Mail::to($request->email)->send(new VerifyMail($this->user));
 
@@ -47,7 +47,7 @@ class AuthController extends Controller
         if (! $token = auth('api')->attempt($request->only(['email','password']))) {
 
             return response()->json([
-                'error' => 'Unauthorized. Email and password do not match' ], 
+                'error' => 'Unauthorized. Email and password do not match' ],
             401);
         }
 
@@ -64,7 +64,7 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
-            'password' => 'required|string|min:6',
+            'password' => 'required|string|min:3',
         ]);
 
         if ($validator->fails()) {
@@ -74,7 +74,7 @@ class AuthController extends Controller
         if (! $token = auth('api')->attempt($request->only(['email','password']))) {
 
             return response()->json([
-                'error' => 'Unauthorized. Email and password do not match' ], 
+                'error' => 'Unauthorized. Email and password do not match' ],
             401);
         }
 
@@ -100,18 +100,18 @@ class AuthController extends Controller
 
     //update user's password
     public function updatePassword(Request $request){
- 
+
         $this->validate($request,
         [
             'current_password' => 'required|string|min:3',
             'new_password' => 'required|confirmed|string|min:3'
         ]);
-        
+
 
         $user = auth()->user();
-        $check_password = password_verify($request->current_password,$user->password);       
+        $check_password = password_verify($request->current_password,$user->password);
 
-       
+
         if(!$check_password){
             return response()->json([
                 'success' => false,
@@ -125,7 +125,7 @@ class AuthController extends Controller
         }else {
             $obj_user = User::find($user->id);
             $obj_user->password = Hash::make($request->new_password);
-            $obj_user->save(); 
+            $obj_user->save();
             return response()->json([
                 'success' => true,
                 'message' => 'You successfully updated your password',
@@ -140,7 +140,7 @@ class AuthController extends Controller
     {
         return response()->json(auth()->user()->only(['id','name','email','phone_number','avatar']));
     }
-    
+
     //Logout the user(Invalidate the token)
     public function logout()
     {
