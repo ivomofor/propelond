@@ -19,14 +19,12 @@ class PostController extends Controller
 
         return PostResource::collection($posts);
     }
-    //Post veiw counter 
-    
+    //Post veiw counter
+
     public function view($id)
     {
         Post::find($id)->increment('view_count');
-        $post_view = Post::find($id);
-
-        return $post_view;
+        return Post::with(['user', 'likes', 'comments'])->find($id);
     }
 
     //Show Method display details about a particuler posts
@@ -107,7 +105,7 @@ class PostController extends Controller
 
         if ($updated) {
             $responsePost = Post::with('user', 'likes', 'comments')->where('id', $post->id)->first();
-            
+
             return response()->json([
                 'success' => true,
                 'message' => 'post successful updated',
