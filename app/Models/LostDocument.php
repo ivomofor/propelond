@@ -13,7 +13,7 @@ class LostDocument extends Model
         'surname', 'given_name', 'dob', 'profession',
         'unique_identification_number', 'place_of_pick',
         'doc_type', 'status', 'description',
-        'image_path', 'user_id'
+        'image_path', 'user_id', 'view_count'
     ];
 
     public function user()
