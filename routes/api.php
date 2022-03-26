@@ -49,8 +49,9 @@ Route::delete('comments/{id}/', [CommentController::class, 'delete_comment'])->m
 
 //Post Likes
 Route::post('posts/likes/{id}', [LikeController::class, 'like_post'])->middleware('jwtAuth');
-//Post Veiw
+//Post & LostDocument Veiw
 Route::get('/posts/view/{id}',[PostController::class, 'view']);
+Route::get('lostDocs/view/{id}', [LostDocumentController::class, 'view']);
 
 //Report Post
 Route::get('reports/', [ReportController::class, 'index'])->middleware('jwtAuth');

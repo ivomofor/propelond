@@ -20,6 +20,14 @@ class LostDocumentController extends Controller
         return LostDocumentResource::collection($lostDocs);
     }
 
+    //Lost Document view counter
+    public function view($id)
+    {
+        LostDocument::find($id)->increment('view_count');
+        return LostDocument::with(['user'])->find($id);
+    }
+
+    // Show lost document
     public function show(Request $request, $id)
     {
         $user = $request->user();
@@ -35,6 +43,7 @@ class LostDocumentController extends Controller
         return $lostDocs;
     }
 
+    // Create lost document
     public function create(Request $request)
     {
             $this->validate($request, [
@@ -83,6 +92,7 @@ class LostDocumentController extends Controller
                 ], 500);
     }
 
+    //Update lost document
     public function update(Request $request, $id)
     {
         $lostDocs = $request->user()->report()->find($id);
@@ -111,6 +121,7 @@ class LostDocumentController extends Controller
         }
     }
 
+    //Delete lost document
     public function destroy(Request $request, $id)
     {
         $lostDocs = $request->user()->report()->find($id);

@@ -32,7 +32,6 @@ class PostController extends Controller
     {
         $user = $request->user();
         $post = $user->post()->find($id);
-        //$post->incrementReadCount();
 
         if (!$post) {
             return response()->json([
