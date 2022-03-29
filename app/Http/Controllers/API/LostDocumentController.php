@@ -78,7 +78,11 @@ class LostDocumentController extends Controller
                 $lostDocs->image_path=$responseImageUrl;
             }
 
-            if ($request->user()->report()->save($lostDocs)) {
+            $user = $request->user();
+            $user->phone_number = $request->phone_number;
+            $user->save();  
+
+            if ($user->report()->save($lostDocs)) {
                 $responseLostDocs = LostDocument::with('user')->where('id', $lostDocs->id)->first();
                 return response()->json([
                     'success' => true,
