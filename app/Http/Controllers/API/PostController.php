@@ -19,8 +19,8 @@ class PostController extends Controller
 
         return PostResource::collection($posts);
     }
-    //Post veiw counter
 
+    //Post veiw counter
     public function view($id)
     {
         Post::find($id)->increment('view_count');
@@ -46,31 +46,38 @@ class PostController extends Controller
     public function create(Request $request)
     {
             $this->validate($request, [
-                'description' => 'max:1024|unique:posts',
-//                'video_path' => 'file|mimetypes:video/mp4',
+                'description' => 'max:1024|unique:posts'
             ]);
 
             $post = new Post;
             $post->description = $request->description;
 
             //Upload image file to post object
-            if($request->file('image_path')==NULL){
-                $post->image_path='';
-            }else{
-                $response =  $request->file('image_path')->storeOnCloudinary('post_images');
+            $image = $request->file('image_path');
+
+            if($request->hasfile('image_path'))
+            {
+                $response =  $image->storeOnCloudinary('post_images');
                 $responseImageUrl = $response->getSecurePath();
                 $post->image_path=$responseImageUrl;
+            }else{
+
+                $post->image_path='';
             }
 
-            //Upload image file to post object
-            if($request->file('video_path')==NULL){
-                $post->video_path='';
-            }else{
-                $compressedVideo = $request->file('video_path')->storeOnCloudinary('post_video');
+            //Upload video file to post object
+            $video = $request->file('video_path');
+
+            if($request->hasfile('video_path'))
+            {
+                $compressedVideo = $video->storeOnCloudinary('post_video');
                 $responseVideoUrl = $compressedVideo->getSecurePath();
                 $post->video_path = $responseVideoUrl;
-            }
 
+            }else{
+                
+                $post->video_path='';
+            }
 
             if ($request->user()->post()->save($post)) {
                 $responsePost = Post::with('user', 'likes', 'comments')->where('id', $post->id)->first();
@@ -89,6 +96,7 @@ class PostController extends Controller
 
     public function update(Request $request, $id)
     {
+
         $post = $request->user()->post()->find($id);
 
         if (!$post) {
@@ -98,11 +106,42 @@ class PostController extends Controller
                 'message' => 'Sorry, post with id ' . $id . ' cannot be found'
             ], 400);
         }
+        
+        $post = new Post;
+        $post->description = $request->description;
 
-        $updated = $post->fill($request->all())
-            ->save();
+        //Upload image file to post 
+        $image = $request->file('image_path');
+
+        if($request->hasfile('image_path'))
+        {
+            $response =  $image->storeOnCloudinary('post_images');
+            $responseImageUrl = $response->getSecurePath();
+            $post->image_path=$responseImageUrl;
+        }else{
+
+            $post->image_path='';
+        }
+
+         //Upload video file to post object
+         $video = $request->file('video_path');
+
+         if($request->hasfile('video_path'))
+         {
+             $compressedVideo = $video->storeOnCloudinary('post_video');
+             $responseVideoUrl = $compressedVideo->getSecurePath();
+             $post->video_path = $responseVideoUrl;
+
+         }else{
+             
+             $post->video_path='';
+         }
+
+        
+        $updated = $request->user()->$post->update();
 
         if ($updated) {
+
             $responsePost = Post::with('user', 'likes', 'comments')->where('id', $post->id)->first();
 
             return response()->json([
