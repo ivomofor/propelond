@@ -79,6 +79,8 @@ class LostDocumentController extends Controller
             }
 
             $user = $request->user();
+            $user->city = $request->city;
+            $user->country = $request->country;
             $user->phone_number = $request->phone_number;
             $user->save();  
 
