@@ -11,6 +11,8 @@ class Post extends Model
     use HasFactory;
     use MediaAlly;
 
+    protected $guarded = [];
+
     protected $fillable = ['description', 'image_path', 'video_path', 'user_id', 'veiw_count'];
 
     public function user()
@@ -28,4 +30,8 @@ class Post extends Model
         return $this->hasMany(Like::class);
     }
 
+    public function images()
+    {
+        return $this->hasMany(Image::class);
+    }
 }

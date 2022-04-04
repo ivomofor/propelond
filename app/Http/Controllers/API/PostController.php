@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use Response;
 use App\Models\User;
+use App\Models\Image;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PostResource;
 use Illuminate\Http\Request;
@@ -52,18 +53,40 @@ class PostController extends Controller
             $post = new Post;
             $post->description = $request->description;
 
-            //Upload image file to post object
-            $image = $request->file('image_path');
+            //$new_post = $user->post()->find($id);
+
+            //Multiple Images
+            $images = $request->file('image_path');
 
             if($request->hasfile('image_path'))
             {
-                $response =  $image->storeOnCloudinary('post_images');
-                $responseImageUrl = $response->getSecurePath();
-                $post->image_path=$responseImageUrl;
+                foreach($images as $image){
+                    $response =  $image->storeOnCloudinary('post_images');
+                    $responseImageUrl = $response->getSecurePath();
+                    $post->image_path=$responseImageUrl;
+                    Image::create([
+                        'post_id' => $post->id,
+                        'image' => $responseImageUrl
+                    ]);
+                }
+        
             }else{
 
                 $post->image_path='';
             }
+
+            //Upload image file to post object
+            // $image = $request->file('image_path');
+
+            // if($request->hasfile('image_path'))
+            // {
+            //     $response =  $image->storeOnCloudinary('post_images');
+            //     $responseImageUrl = $response->getSecurePath();
+            //     $post->image_path=$responseImageUrl;
+            // }else{
+
+            //     $post->image_path='';
+            // }
 
             //Upload video file to post object
             $video = $request->file('video_path');
@@ -93,6 +116,17 @@ class PostController extends Controller
                     'message' => 'Sorry, post could not be added'
                 ], 500);
     }
+
+    public function images($id){
+        $post = Post::find($id);
+        if(!$post) abort(404);
+        $images = $post->images;
+        return response()->json([
+            'success' => true,
+            'post' => $post,
+            'post_image' => $images
+        ]);
+    } 
 
     public function update(Request $request, $id)
     {
